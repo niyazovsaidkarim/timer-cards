@@ -9,12 +9,12 @@ A small offline Android focus timer for personal study. Android 8.0+ (API 26). N
 - Separate break mode; breaks and pauses never contribute to study totals.
 - Black immersive fullscreen with large digits, landscape support and screen kept awake.
 - Daily / weekly charts, previous period navigation, editable daily goal (default five hours).
-- Session history and automatic local persistence. Active timer is restored after app/process closure.
+- Two English screens, Focus and Results, with automatic local persistence. Active timer is restored after app/process closure.
 - Android completion notification (permission requested on Android 13+).
 
 ## Accounting
 
-Only active focus intervals count. A timer is a record of self-reported study, not proof of attention; it does not block other apps. Running intervals stop at the planned deadline, including when the app is reopened late. Pauses are excluded, and intervals crossing local midnight are split between dates. Charts include the current running focus; session count and longest session refer to saved sessions. History groups sessions by start date. Dates use the device's current local time zone.
+Only active focus intervals count. A timer is a record of self-reported study, not proof of attention; it does not block other apps. Running intervals stop at the planned deadline, including when the app is reopened late. Pauses are excluded, and intervals crossing local midnight are split between dates. Charts include the current running focus; session count and longest session refer to saved sessions. Dates use the device's current local time zone.
 
 The app uses persisted wall-clock deadlines. Manually changing the clock/time zone can affect accounting. Background notifications use Android inexact alarms and can be delayed by battery restrictions. Reboot cancels the OS alarm, but opening the app restores and reconciles the timer. Force-stop suppresses Android alarms until reopened. Fullscreen is not an app blocker. Local history is removed by clearing app storage or uninstalling; there is no cloud backup.
 
@@ -28,7 +28,7 @@ export ANDROID_HOME=/path/to/android-sdk
 bash scripts/build-apk.sh
 ```
 
-Output: `app/build/manual/Sokin-Focus-1.0.apk`. The script uses the official Android SDK tools directly, so it does not need Maven/Gradle dependency downloads. The Gradle project can also be opened in Android Studio.
+Output: `app/build/manual/Sokin-Focus-1.1.apk`. The script uses the official Android SDK tools directly, so it does not need Maven/Gradle dependency downloads. The Gradle project can also be opened in Android Studio.
 
 `debug.keystore` is generated locally and must remain private. Preserve it to sign future updates with the same identity; otherwise Android requires uninstalling the old app, which removes its local data. This personal APK uses development signing. A store release needs a production signing setup. The CI artifact gets an ephemeral development key and is not an in-place update for the delivered APK.
 
@@ -43,4 +43,4 @@ Tests cover deadline capping, pause/resume, repeated completion, state persisten
 
 ## Device smoke test
 
-Install the APK, grant notifications, set a one-minute timer, enter fullscreen and rotate. Pause for a few seconds, resume, then let it finish. Check history and totals. Repeat with the screen locked and with the app swiped away. Test break mode and confirm it does not increase study totals. Turn on airplane mode to verify all app features remain available.
+Install the APK, grant notifications, set a one-minute timer, enter fullscreen and rotate. Pause for a few seconds, resume, then let it finish. Check Results totals. Repeat with the screen locked and with the app swiped away. Test break mode and confirm it does not increase study totals. Turn on airplane mode to verify all app features remain available.
