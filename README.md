@@ -28,7 +28,7 @@ export ANDROID_HOME=/path/to/android-sdk
 bash scripts/build-apk.sh
 ```
 
-Output: `app/build/manual/Sokin-Focus-1.2.apk`. The script uses the official Android SDK tools directly, so it does not need Maven/Gradle dependency downloads. The Gradle project can also be opened in Android Studio.
+Output: `app/build/manual/Sokin-Focus-1.3.apk`. The script uses the official Android SDK tools directly, so it does not need Maven/Gradle dependency downloads. The Gradle project can also be opened in Android Studio.
 
 `debug.keystore` is generated locally and must remain private. Preserve it to sign future updates with the same identity; otherwise Android requires uninstalling the old app, which removes its local data. This personal APK uses development signing. A store release needs a production signing setup. The CI artifact gets an ephemeral development key and is not an in-place update for the delivered APK.
 

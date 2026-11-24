@@ -36,9 +36,38 @@ h1{font:600 30px Roboto,system-ui,sans-serif;margin:16px 0}
 #full.controls button {visibility:visible}
 #fullPause {bottom:12px}
 #full .exit {top:12px;right:12px}
+
+body {background:#f6f5f1;color:#17221e}
+main {max-width:510px;margin:auto;padding:16px 20px 95px}
+nav {position:fixed;inset:auto 0 0;z-index:5;background:#fcfcf9;border-top:1px solid #d9ddd6;
+  margin:auto;max-width:none;padding:6px 16px;justify-content:center;gap:8px}
+nav button,nav button.active {flex:1;max-width:200px;border:0;border-radius:12px;font-size:15px}
+nav button.active {background:#e0e9df;color:#214b39}
+h1 {font-size:32px;letter-spacing:-1.3px;margin:6px 0 18px}
+#modes,#progress>.pills {display:inline-flex;background:#e6e7e1;border-radius:15px;padding:4px;margin:0}
+#modes button,#progress>.pills button {border-radius:11px;background:transparent;min-width:86px}
+#modes .selected,#progress>.pills .selected {background:#fff!important;color:#193f30!important;box-shadow:0 1px 4px #0002}
+#focus .timer {background:#fff;color:#17221e;border:1px solid #dedfd7;padding:26px 18px 8px;margin:16px 0;border-radius:24px}
+.timer .eyebrow {color:#53655c}.timer .time {font-size:clamp(70px,21vw,100px);letter-spacing:-.065em;color:#1b392e;margin:10px 0}
+.timer .ring {height:3px;background:#e6ece5;margin:16px 0}.timer .ring i {background:#376c53}
+.timer .primary {background:#204c39!important;color:white!important;border-radius:14px}
+.timer #expand {color:#435d50}
+#presets {margin:16px 0 20px}#presets button {font-size:14px;background:#f0f2ed}
+#presets .selected {background:#dfebdf!important;color:#1d4633!important}
+label[for=task]{display:flex;justify-content:space-between;color:#273c31;font-weight:600}
+label small{font-weight:400;color:#687568}
+#progress>.between {margin:12px 0 0}
+#progress>.between button,#goalEdit {background:transparent;color:#35553e}
+#progress .card {padding:18px;background:#fff}
+#progress .barplot {height:122px;border-bottom:1px solid #e0e5dc}
+.bar {min-height:0}.grid .card .number {font-size:25px}
+#progress .number,#goalText {font-variant-numeric:tabular-nums}
+#full {z-index:12;background:#000}
+#full #fullClock {font-size:min(42vw,78vh);transform:scaleX(.84)}
+#full #fullClock.long {font-size:min(34vw,77vh)}
 </style><body><nav><button class="active" data-page="focus">Focus</button><button data-page="progress">Results</button></nav><main>
-<section id="focus"><div class="pills" id="modes"><button class="selected" data-mode="focus">Study</button><button data-mode="break">Break</button></div><div class="card timer"><div class="eyebrow" id="status">Ready to focus</div><div class="time" id="clock">25:00</div><div class="ring"><i id="fill" style="width:0"></i></div><div class="row"><button class="primary" id="start">Start</button><button hidden="" id="stop">Finish</button></div><button id="expand" style="background:none;margin-top:15px">Full screen</button></div><div class="pills" id="presets"><button data-min="25">25 min</button><button data-min="45">45 min</button><button data-min="60">60 min</button><button id="custom">Custom</button></div><div hidden="" id="notice"></div><input aria-label="Session name" autocomplete="off" id="task" maxlength="80" placeholder="Session name (optional)"/></section>
-<section hidden="" id="progress"><h1>Results</h1><div class="pills"><button class="selected" id="dayBtn">Day</button><button id="weekBtn">Week</button></div><div class="row between"><button aria-label="Previous period" id="prev">←</button><span class="small" id="periodLabel"></span><button aria-label="Next period" id="next">→</button></div><div class="card"><div class="small" id="totalLabel">Focus time</div><div class="number" id="periodTotal"></div><div class="barplot" id="chart"></div></div><div class="grid"><div class="card"><div class="small">Finished sessions</div><div class="number" id="sessionsCount"></div></div><div class="card"><div class="small">Longest session</div><div class="number" id="longest"></div></div></div><div class="card"><div class="row between"><h2>Daily goal</h2><button id="goalEdit">Edit</button></div><div id="goalText"></div><div class="ring"><i id="goalFill"></i></div></div></section>
+<section id="focus"><h1>Focus timer</h1><div class="pills" id="modes"><button class="selected" data-mode="focus">Study</button><button data-mode="break">Break</button></div><div class="card timer"><div class="eyebrow" id="status">Ready to focus</div><div class="time" id="clock">25:00</div><div class="ring"><i id="fill" style="width:0"></i></div><div class="pills" id="presets"><button data-min="25">25 min</button><button data-min="45">45 min</button><button data-min="60">60 min</button><button id="custom">Custom</button></div><div class="row"><button class="primary" id="start">Start</button><button hidden="" id="stop">Finish</button></div><button id="expand" style="background:none;margin-top:15px">Full screen</button></div><div hidden="" id="notice"></div><label for="task">Session name <small>Optional</small></label><input aria-label="Session name" autocomplete="off" id="task" maxlength="80" placeholder="e.g. IELTS Reading"/></section>
+<section hidden="" id="progress"><h1>Results</h1><div class="pills"><button class="selected" id="dayBtn">Day</button><button id="weekBtn">Week</button></div><div class="row between"><button aria-label="Previous period" id="prev">←</button><span class="small" id="periodLabel"></span><button aria-label="Next period" id="next">→</button></div><div class="card"><div class="small" id="totalLabel">Focus time</div><div class="number" id="periodTotal"></div><div class="barplot" id="chart"></div></div><div class="grid"><div class="card"><div class="small">Finished sessions</div><div class="number" id="sessionsCount"></div></div><div class="card"><div class="small">Longest session</div><div class="number" id="longest"></div></div></div><div class="card"><div class="row between"><h2>Today’s goal</h2><button id="goalEdit">Edit</button></div><div id="goalText"></div><div class="ring"><i id="goalFill"></i></div></div></section>
 
 </main>
 <div id="full"><button class="exit" id="collapse">Exit full screen</button><div class="eyebrow" id="fullStatus">Focus</div><div class="time" id="fullClock">25:00</div><p id="fullTask"></p><button id="fullPause">Start</button></div>
