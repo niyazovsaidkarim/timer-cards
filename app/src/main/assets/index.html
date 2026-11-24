@@ -23,6 +23,19 @@ h1{font:600 30px Roboto,system-ui,sans-serif;margin:16px 0}
 #progress .card{margin:12px 0}#progress .grid .card{margin:0}
 #task{background:white}#notice{margin:10px 0}
 @media(max-height:550px){.timer{padding:10px}.timer .time{margin:3px 0}.timer .ring{margin:6px 0}}
+
+#full {background:#050505;color:white;padding:0;overflow:hidden}
+#fullStatus,#fullTask {display:none}
+#full #fullClock {
+  margin:0;color:white;font-family:sans-serif-condensed,"Roboto Condensed",Roboto,sans-serif;
+  font-weight:900;line-height:1;letter-spacing:-.035em;font-variant-numeric:tabular-nums;
+  font-size:min(37vw,72vh);transform:scaleX(.82);white-space:nowrap;
+}
+#full #fullClock.long {font-size:min(31vw,72vh)}
+#full button {position:absolute;z-index:1;visibility:hidden}
+#full.controls button {visibility:visible}
+#fullPause {bottom:12px}
+#full .exit {top:12px;right:12px}
 </style><body><nav><button class="active" data-page="focus">Focus</button><button data-page="progress">Results</button></nav><main>
 <section id="focus"><div class="pills" id="modes"><button class="selected" data-mode="focus">Study</button><button data-mode="break">Break</button></div><div class="card timer"><div class="eyebrow" id="status">Ready to focus</div><div class="time" id="clock">25:00</div><div class="ring"><i id="fill" style="width:0"></i></div><div class="row"><button class="primary" id="start">Start</button><button hidden="" id="stop">Finish</button></div><button id="expand" style="background:none;margin-top:15px">Full screen</button></div><div class="pills" id="presets"><button data-min="25">25 min</button><button data-min="45">45 min</button><button data-min="60">60 min</button><button id="custom">Custom</button></div><div hidden="" id="notice"></div><input aria-label="Session name" autocomplete="off" id="task" maxlength="80" placeholder="Session name (optional)"/></section>
 <section hidden="" id="progress"><h1>Results</h1><div class="pills"><button class="selected" id="dayBtn">Day</button><button id="weekBtn">Week</button></div><div class="row between"><button aria-label="Previous period" id="prev">←</button><span class="small" id="periodLabel"></span><button aria-label="Next period" id="next">→</button></div><div class="card"><div class="small" id="totalLabel">Focus time</div><div class="number" id="periodTotal"></div><div class="barplot" id="chart"></div></div><div class="grid"><div class="card"><div class="small">Finished sessions</div><div class="number" id="sessionsCount"></div></div><div class="card"><div class="small">Longest session</div><div class="number" id="longest"></div></div></div><div class="card"><div class="row between"><h2>Daily goal</h2><button id="goalEdit">Edit</button></div><div id="goalText"></div><div class="ring"><i id="goalFill"></i></div></div></section>

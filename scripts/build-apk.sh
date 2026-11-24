@@ -9,7 +9,7 @@ OUT="$PWD/app/build/manual"
 mkdir -p "$OUT/classes" "$OUT/dex"
 python3 - "$OUT/AndroidManifest.xml" <<'PY'
 import sys
-s=open('app/src/main/AndroidManifest.xml').read().replace('<manifest ', '<manifest package="uz.saidkarim.focus" android:versionCode="2" android:versionName="1.1" ',1).replace('<application ', '<uses-sdk android:minSdkVersion="26" android:targetSdkVersion="35"/><application ',1)
+s=open('app/src/main/AndroidManifest.xml').read().replace('<manifest ', '<manifest package="uz.saidkarim.focus" android:versionCode="3" android:versionName="1.2" ',1).replace('<application ', '<uses-sdk android:minSdkVersion="26" android:targetSdkVersion="35"/><application ',1)
 open(sys.argv[1],'w').write(s)
 PY
 "$BT/aapt2" compile --dir app/src/main/res -o "$OUT/resources.zip"
@@ -22,6 +22,6 @@ PY
 if [ ! -f debug.keystore ]; then
  "$JAVA_HOME/bin/keytool" -genkeypair -keystore debug.keystore -storepass android -keypass android -alias androiddebugkey -dname 'CN=Android Debug,O=Android,C=US' -keyalg RSA -validity 10000
 fi
-JAVA_HOME="$JAVA_HOME" "$BT/apksigner" sign --ks debug.keystore --ks-pass pass:android --key-pass pass:android --out "$OUT/Sokin-Focus-1.1.apk" "$OUT/aligned.apk"
-JAVA_HOME="$JAVA_HOME" "$BT/apksigner" verify --verbose "$OUT/Sokin-Focus-1.1.apk"
-echo "$OUT/Sokin-Focus-1.1.apk"
+JAVA_HOME="$JAVA_HOME" "$BT/apksigner" sign --ks debug.keystore --ks-pass pass:android --key-pass pass:android --out "$OUT/Sokin-Focus-1.2.apk" "$OUT/aligned.apk"
+JAVA_HOME="$JAVA_HOME" "$BT/apksigner" verify --verbose "$OUT/Sokin-Focus-1.2.apk"
+echo "$OUT/Sokin-Focus-1.2.apk"
