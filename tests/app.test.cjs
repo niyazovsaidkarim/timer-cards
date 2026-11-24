@@ -2,3 +2,15 @@ const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/st
 class Element{constructor(){this.textContent='';this.value='';this.style={};this.dataset={};this.children=[];this.classes=new Set();this.classList={toggle:(c,v)=>v?this.classes.add(c):this.classes.delete(c),contains:c=>this.classes.has(c)}}append(...e){this.children.push(...e)}replaceChildren(){this.children=[]}showModal(){this.open=true}close(){this.open=false}}
 let saved='',now=Date.now(),elements={};let document={getElementById:id=>elements[id]??=new Element(),querySelectorAll:()=>[],createElement:()=>new Element(),addEventListener:()=>{}};let context={clearTimeout,setTimeout,document,window:{Native:{load:()=>saved,save:s=>saved=s,alarm:()=>{},fullscreen:()=>{},done:()=>{}},scrollTo:()=>{}},setInterval:()=>{},Date:class extends Date{constructor(...a){super(...(a.length?a:[now]))}static now(){return now}},console};context.window.Engine=require('../app/src/main/assets/engine.js');context.Engine=context.window.Engine;vm.createContext(context);const run=s=>vm.runInContext(s,context);run(fs.readFileSync('app/src/main/assets/app.js','utf8'));
 run("$('task').value='IELTS Reading';toggle()");now+=60000;run('toggle()');assert.equal(run('Engine.elapsed(data.active,Date.now())'),60000);now+=120000;assert.equal(run('Engine.elapsed(data.active,Date.now())'),60000);run('toggle()');now+=30000;run('finish(false)');assert.equal(run('data.sessions[0].duration'),90000);run("navigate('progress');changePeriod('week')");assert.equal(elements.chart.children.length,7);run("data.mode='break';data.minutes=5;toggle()");now+=300001;run('tick()');assert.equal(run('data.sessions.length'),1);run("data.mode='focus';data.minutes=1;toggle()");now+=61000;run('tick();tick()');assert.equal(run('data.sessions.length'),2);assert.equal(run('data.sessions[1].duration'),60000);run("numberDialog('timer');$('minutes').value='0';$('saveDialog').onclick()");assert.equal(elements.numberDialog.open,true);run("$('minutes').value='45';$('saveDialog').onclick()");assert.equal(run('data.minutes'),45);assert.equal(JSON.parse(saved).sessions.length,2);console.log('PASS: UI controller pause/resume, early finish, results, weekly chart, breaks excluded, single completion, input validation, persistence');
+
+run("data.mode='focus';data.minutes=45;toggle()");
+now+=45*60000;
+run('tick()');
+assert.equal(run('data.mode'),'break');
+assert.equal(run('data.minutes'),10);
+run('toggle()');now+=600000;run('tick()');
+assert.equal(run('data.minutes'),45);
+const before=run('data.sessions.length');
+run('toggle()');now+=4000;run("$('stop').onclick();$('discard').onclick()");
+assert.equal(run('data.sessions.length'),before);
+console.log('PASS: paired study/break cycle and discarded early finish');
