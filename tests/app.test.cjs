@@ -14,3 +14,14 @@ const before=run('data.sessions.length');
 run('toggle()');now+=4000;run("$('stop').onclick();$('discard').onclick()");
 assert.equal(run('data.sessions.length'),before);
 console.log('PASS: paired study/break cycle and discarded early finish');
+
+run("data.mode='focus';data.minutes=1;$('task').value='Reading';toggle()");
+now+=60000;run('tick()');
+const sessionId=run('data.extendId'), count=run('data.sessions.length');
+run("$('extend').onclick()");now+=300000;run('tick()');
+assert.equal(run('data.sessions.length'),count);
+assert.equal(run('data.sessions.at(-1).duration'),360000);
+assert.equal(run('data.sessions.at(-1).id'),sessionId);
+run("$('extend').onclick()");now+=3000;run('finish(false,true)');
+assert.equal(run('data.sessions.at(-1).duration'),360000);
+console.log('PASS: extension preserves session identity and prior time on discard');
